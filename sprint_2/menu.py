@@ -1,6 +1,12 @@
 import os
 import re  # Biblioteca para expressões regulares para validações de formato
 
+# Lista de informações sobre as linhas de trem
+linhas_trem = [
+    "Atualmente há uma manutenção em andamento na Linha 8 - Diamante.",
+    "A Linha 9 - Esmeralda está operando normalmente."
+]
+
 # Função para validar cada campo individualmente
 def validar_campo(valor, tipo):
     if tipo == 'nome':
@@ -75,7 +81,6 @@ def cadastrar_funcionario():
         if voltar == 'V':
             break  # Sai do laço e retorna ao menu principal
 
-
 # Função para consultar as linhas de trem
 def consultar_linhas_trem():
     os.system('cls')  
@@ -91,17 +96,17 @@ def consultar_linhas_trem():
         # Exibe informações da linha escolhida
         if linha == '1':
             os.system('cls')
-            print('Atualmente há uma manutenção em andamento na Linha 8 - Diamante. ')
+            print(linhas_trem[0])  # Linha 8
         elif linha == '2':
             os.system('cls')
-            print('A Linha 9 - Esmeralda está operando normalmente.')
+            print(linhas_trem[1])  # Linha 9
         elif linha == '3':
             os.system('cls')
             break  # Retorna ao menu principal
         else:
             print('Opção inválida. Tente novamente.')  # escolha incorreta
 
- #  Função para exibir o tempo médio de espera
+# Função para exibir o tempo médio de espera
 def tempo_medio_espera():
     os.system('cls')  
     while True:
@@ -119,13 +124,12 @@ def tempo_medio_espera():
             print('Devido a manutenção preventiva, estamos com maiores tempos de intervalo entre trens na Linha 8 - Diamante')
         elif tempo == '2':
             os.system('cls')
-            print('A Linha 9 - Esmeralda está operando normalmente,  com intervalos de 6 minutos entre trens')
-
+            print('A Linha 9 - Esmeralda está operando normalmente, com intervalos de 6 minutos entre trens')
         elif tempo == '3':
             os.system('cls')
             break  
         else:
-            print('Opção inválida. Tente novamente.') #escolha incorreta
+            print('Opção inválida. Tente novamente.')  # escolha incorreta
 
 # Função para sair do programa
 def sair():
