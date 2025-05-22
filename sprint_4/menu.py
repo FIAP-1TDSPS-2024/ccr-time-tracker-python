@@ -26,8 +26,8 @@ def get_conexao():
 def consultar_linhas(numero_estacao):
     sql =  """
         SELECT * FROM estacao e
-        JOIN linha_estacao le ON e.id = le.estacoes_id
-        WHERE le.linhas_id = :numero_estacao
+        JOIN linha_estacao le ON e.id_estacao = le.id_estacao
+        WHERE le.id_linha = :numero_estacao
     """
 
     parametros = {'numero_estacao': numero_estacao}
@@ -74,11 +74,11 @@ def validar_campo(valor, tipo):
             return True
         print("Erro: A senha pode conter letras, números e caracteres especiais.")
 
-    elif tipo == 'permissao':
+    elif tipo == 'acesso':
         # Validação para a permissao: valor numérico de um algarismo
         if re.fullmatch(r'\d{1}', valor):
             return True
-        print("Erro: A permissao deve ser apenas um número de 0 a 3")
+        print("Erro: O acesso deve ser apenas um número de 0 a 3")
     
     return False  # Retorna False se a validação falhar
 # Função para cadastrar um funcionário
@@ -195,15 +195,15 @@ def cadastrar_funcionario():
                 break  # Sai do loop se a senha for válida
 
         while True:
-            permissao = input('Digite o nível de permissao do funcionario, de 0 a 3: ')
-            if validar_campo(permissao, 'permissao'):
-                funcionario.update({"permissao": permissao})
+            acesso = input('Digite o nível de permissao do funcionario, de 0 a 3: ')
+            if validar_campo(acesso, 'acesso'):
+                funcionario.update({"acesso": acesso})
                 break  # Sai do loop se a senha for válida
 
         #criando sql concatenando strings
         sql = """
-        INSERT INTO funcionario (nome, cpf, cargo, email, senha, permissao)
-        VALUES (:nome, :cpf, :cargo, :email, :senha, :permissao)
+        INSERT INTO funcionario (nome, cpf, cargo, email, senha, acesso)
+        VALUES (:nome, :cpf, :cargo, :email, :senha, :acesso)
         """
         
         funcionario = {
@@ -212,7 +212,7 @@ def cadastrar_funcionario():
             'cargo': cargo,
             'email': email,
             'senha': senha,
-            'permissao': permissao
+            'acesso': acesso
         }
         with get_conexao() as con:
             with con.cursor() as cur:
@@ -273,14 +273,14 @@ def atualizar_funcionario():
                 break  # Sai do loop se a senha for válida
 
         while True:
-            permissao = input('Digite o nível de permissao do funcionario, de 0 a 3: ')
-            if validar_campo(permissao, 'permissao'):
-                funcionario.update({"permissao": permissao})
+            acesso = input('Digite o nível de permissao do funcionario, de 0 a 3: ')
+            if validar_campo(acesso, 'acesso'):
+                funcionario.update({"acesso": acesso})
                 break  # Sai do loop se a senha for válida
 
         #criando sql concatenando strings
         sql = """
-        UPDATE funcionario set nome =:nome, cpf =:cpf, cargo=:cargo, email=:email, senha=:senha, permissao=:permissao
+        UPDATE funcionario set nome =:nome, cpf =:cpf, cargo=:cargo, email=:email, senha=:senha, acesso=:acesso
         WHERE id_funcionario =:id
         """
         
@@ -291,7 +291,7 @@ def atualizar_funcionario():
             'cargo': cargo,
             'email': email,
             'senha': senha,
-            'permissao': permissao
+            'acesso': acesso
         }
         with get_conexao() as con:
             with con.cursor() as cur:
@@ -322,12 +322,12 @@ def consultar_linhas_trem():
         # Exibe informações da linha escolhida
         if linha == '1':
             os.system('cls') 
-            for i in consultar_linhas(8):
+            for i in consultar_linhas(1):
                 print(i['nome'])# Linha 8
             data_json['linhas']['linha_8']['estacoes'] = consultar_linhas(8)
         elif linha == '2':
             os.system('cls')
-            for i in consultar_linhas(9):
+            for i in consultar_linhas(2):
                 print(i['nome']) # Linha 9
             data_json['linhas']['linha_9']['estacoes'] = consultar_linhas(9)
         elif linha == '3':
