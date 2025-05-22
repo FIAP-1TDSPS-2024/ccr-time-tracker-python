@@ -19,7 +19,7 @@ data_json = {
 }
 
 def get_conexao():
-    return oracledb.connect(user="rm561144", password="130304",
+    return oracledb.connect(user="", password="",
                             dsn="oracle.fiap.com.br/orcl")
 
 
